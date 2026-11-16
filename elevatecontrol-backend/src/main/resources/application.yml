@@ -1,0 +1,60 @@
+
+server:
+  port: ${PORT:8090}
+  servlet:
+    session:
+      cookie:
+        http-only: true
+        same-site: lax
+        secure: ${SESSION_COOKIE_SECURE:false}
+      timeout: 60m
+
+spring:
+  datasource:
+    url: ${DB_URL:jdbc:mysql://localhost:3306/elevatecontrol?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC}
+    username: ${DB_USER:elevate}
+    password: ${DB_PASSWORD:elevate_dev}
+
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+
+  flyway:
+    enabled: true
+
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+
+  mail:
+    host: ${SMTP_HOST:}
+    port: ${SMTP_PORT:587}
+    username: ${SMTP_USER:}
+    password: ${SMTP_PASSWORD:}
+    properties:
+      mail.smtp.auth: ${SMTP_AUTH:true}
+      mail.smtp.starttls.enable: ${SMTP_STARTTLS:true}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+  health:
+    mail:
+      enabled: false
+
+app:
+  frontend-origins: ${FRONTEND_ORIGINS:http://localhost:5173}
+  frontend-reset-url: ${FRONTEND_RESET_URL:http://localhost:5173/reset-password}
+
+  bootstrap:
+    email: ${BOOTSTRAP_ADMIN_EMAIL:}
+    password: ${BOOTSTRAP_ADMIN_PASSWORD:}
+    name: ${BOOTSTRAP_ADMIN_NAME:Administrador}
